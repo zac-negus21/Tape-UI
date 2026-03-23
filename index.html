@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TapeOps Control Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar glass-panel">
+        <div>
+          <div class="brand">
+            <div class="brand__icon">T</div>
+            <div>
+              <p class="eyebrow">Tape automation</p>
+              <h1>TapeOps</h1>
+            </div>
+          </div>
+
+          <nav class="nav">
+            <button class="nav__item nav__item--active">Overview</button>
+            <button class="nav__item">Jobs</button>
+            <button class="nav__item">Tape Library</button>
+            <button class="nav__item">Remote Hosts</button>
+            <button class="nav__item">Catalog Scan</button>
+            <button class="nav__item">Archive Plans</button>
+          </nav>
+        </div>
+
+        <div class="sidebar__footer">
+          <p class="eyebrow">Connection profile</p>
+          <strong>vault-west-02</strong>
+          <span>SSH tunnel healthy · LTFS bridge connected</span>
+        </div>
+      </aside>
+
+      <main class="dashboard">
+        <section class="hero glass-panel">
+          <div>
+            <p class="eyebrow">Modern tape operations workspace</p>
+            <h2>Manage remote archives, libraries, and active tape jobs from one clean console.</h2>
+            <p class="hero__text">
+              Connect over SSH, prepare tar writes, restore archived datasets, inspect media contents,
+              and monitor library hardware in real time.
+            </p>
+            <div class="hero__actions">
+              <button class="button button--primary">Create archive job</button>
+              <button class="button button--secondary">Open tape scan</button>
+            </div>
+          </div>
+          <div class="hero__metrics">
+            <article>
+              <span>Live jobs</span>
+              <strong>6</strong>
+              <small>2 writes · 3 restores · 1 scan</small>
+            </article>
+            <article>
+              <span>Healthy drives</span>
+              <strong>11 / 12</strong>
+              <small>1 drive needs cleaning</small>
+            </article>
+            <article>
+              <span>Queued data</span>
+              <strong>184 TB</strong>
+              <small>Across 14 pending job plans</small>
+            </article>
+          </div>
+        </section>
+
+        <section class="grid grid--two">
+          <article class="glass-panel panel panel--form">
+            <div class="panel__header">
+              <div>
+                <p class="eyebrow">Remote connectivity</p>
+                <h3>SSH host connection</h3>
+              </div>
+              <span class="status-pill status-pill--success">Connected</span>
+            </div>
+            <form class="form-grid">
+              <label>
+                Host alias
+                <input type="text" value="vault-west-02" />
+              </label>
+              <label>
+                Target address
+                <input type="text" value="backup@example.net:22" />
+              </label>
+              <label>
+                Auth method
+                <select>
+                  <option selected>SSH key + agent</option>
+                  <option>Password</option>
+                  <option>Hardware token</option>
+                </select>
+              </label>
+              <label>
+                Tape device path
+                <input type="text" value="/dev/nst0" />
+              </label>
+              <label class="form-grid__wide">
+                Session notes
+                <textarea rows="4">Nightly vault archive link with access to the Spectra Logic library and host-side tar staging volumes.</textarea>
+              </label>
+            </form>
+            <div class="panel__footer">
+              <button class="button button--primary">Validate SSH + devices</button>
+              <button class="button button--ghost">Save host profile</button>
+            </div>
+          </article>
+
+          <article class="glass-panel panel">
+            <div class="panel__header">
+              <div>
+                <p class="eyebrow">Library status</p>
+                <h3>Tape drive health</h3>
+              </div>
+              <span class="status-pill status-pill--warning">1 warning</span>
+            </div>
+            <div class="drive-list" id="drive-list"></div>
+          </article>
+        </section>
+
+        <section class="grid grid--three">
+          <article class="glass-panel panel panel--span-2">
+            <div class="panel__header">
+              <div>
+                <p class="eyebrow">Archive workflow</p>
+                <h3>Write / restore / scan with tar</h3>
+              </div>
+            </div>
+            <div class="tabs" id="workflow-tabs">
+              <button class="tabs__item tabs__item--active" data-tab="write">Write to tape</button>
+              <button class="tabs__item" data-tab="restore">Restore from tape</button>
+              <button class="tabs__item" data-tab="scan">Scan tape catalog</button>
+            </div>
+            <div class="workflow-card active" data-panel="write">
+              <div class="workflow-card__content">
+                <div>
+                  <h4>Stage a tar archive to LTO</h4>
+                  <p>
+                    Select directories from a remote host scan, preview size, compression, and target slot,
+                    then submit a write job.
+                  </p>
+                </div>
+                <ul class="check-list">
+                  <li>Directory selection + inclusion preview</li>
+                  <li>Tar flags, block size, compression profile</li>
+                  <li>Assigned tape, drive, and retention policy</li>
+                </ul>
+              </div>
+              <button class="button button--primary">Build write plan</button>
+            </div>
+            <div class="workflow-card" data-panel="restore">
+              <div class="workflow-card__content">
+                <div>
+                  <h4>Restore files from tape using tar</h4>
+                  <p>
+                    Choose a known archive, select destination path, and follow progress with throughput and ETA.
+                  </p>
+                </div>
+                <ul class="check-list">
+                  <li>Catalog-backed archive selection</li>
+                  <li>Path remapping and overwrite safeguards</li>
+                  <li>Priority restore queue controls</li>
+                </ul>
+              </div>
+              <button class="button button--primary">Launch restore</button>
+            </div>
+            <div class="workflow-card" data-panel="scan">
+              <div class="workflow-card__content">
+                <div>
+                  <h4>Scan existing tapes for file inventory</h4>
+                  <p>
+                    Run a non-destructive tape scan to browse tar contents, timestamps, and file counts before restore.
+                  </p>
+                </div>
+                <ul class="check-list">
+                  <li>Catalog tar members with path filters</li>
+                  <li>Show media metadata and occupancy</li>
+                  <li>Export scan results for compliance review</li>
+                </ul>
+              </div>
+              <button class="button button--primary">Start scan</button>
+            </div>
+          </article>
+
+          <article class="glass-panel panel">
+            <div class="panel__header">
+              <div>
+                <p class="eyebrow">Media inventory</p>
+                <h3>Tape library</h3>
+              </div>
+            </div>
+            <div class="library-overview">
+              <div>
+                <span>Slots occupied</span>
+                <strong>92 / 120</strong>
+              </div>
+              <div>
+                <span>Scratch tapes</span>
+                <strong>14</strong>
+              </div>
+              <div>
+                <span>Cleaning cartridges</span>
+                <strong>2</strong>
+              </div>
+            </div>
+            <div class="slot-grid" id="slot-grid"></div>
+          </article>
+        </section>
+
+        <section class="grid grid--two">
+          <article class="glass-panel panel">
+            <div class="panel__header">
+              <div>
+                <p class="eyebrow">Source browser</p>
+                <h3>Pick files and folders for tape write</h3>
+              </div>
+              <button class="button button--ghost">Scan /data/projects</button>
+            </div>
+            <div class="tree-toolbar">
+              <div>
+                <span class="pill">Remote path</span>
+                <strong>/data/projects</strong>
+              </div>
+              <div>
+                <span class="pill">Selected</span>
+                <strong>12.4 TB</strong>
+              </div>
+            </div>
+            <div class="file-tree" id="file-tree"></div>
+          </article>
+
+          <article class="glass-panel panel">
+            <div class="panel__header">
+              <div>
+                <p class="eyebrow">Live operations</p>
+                <h3>Jobs with ETA</h3>
+              </div>
+              <span class="status-pill status-pill--info">Auto-refresh 5s</span>
+            </div>
+            <div class="job-list" id="job-list"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

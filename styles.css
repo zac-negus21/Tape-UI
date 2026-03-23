@@ -1,0 +1,514 @@
+:root {
+  --bg: #07111f;
+  --bg-secondary: #0d1a2d;
+  --panel: rgba(13, 26, 45, 0.78);
+  --panel-strong: rgba(7, 17, 31, 0.92);
+  --border: rgba(148, 163, 184, 0.18);
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #5eead4;
+  --accent-strong: #14b8a6;
+  --warning: #f59e0b;
+  --danger: #fb7185;
+  --success: #34d399;
+  --info: #60a5fa;
+  --shadow: 0 24px 80px rgba(2, 6, 23, 0.45);
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(20, 184, 166, 0.25), transparent 28%),
+    radial-gradient(circle at top right, rgba(96, 165, 250, 0.22), transparent 24%),
+    linear-gradient(180deg, #08101d 0%, #040814 100%);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  padding: 24px;
+}
+
+.glass-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.sidebar {
+  min-height: calc(100vh - 48px);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.brand__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--accent), var(--info));
+  display: grid;
+  place-items: center;
+  color: #06202b;
+  font-weight: 800;
+  font-size: 1.4rem;
+}
+
+.brand h1,
+.hero h2,
+.panel h3,
+.workflow-card h4 {
+  margin: 0;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.nav {
+  display: grid;
+  gap: 10px;
+}
+
+.nav__item,
+.button,
+.tabs__item {
+  border: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.nav__item {
+  text-align: left;
+  background: rgba(15, 23, 42, 0.6);
+  color: var(--text);
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+}
+
+.nav__item:hover,
+.tabs__item:hover,
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.nav__item--active {
+  background: rgba(94, 234, 212, 0.14);
+  border-color: rgba(94, 234, 212, 0.32);
+}
+
+.sidebar__footer {
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: rgba(15, 23, 42, 0.58);
+  display: grid;
+  gap: 4px;
+  color: var(--muted);
+}
+
+.dashboard {
+  display: grid;
+  gap: 24px;
+}
+
+.hero,
+.panel {
+  border-radius: var(--radius-xl);
+}
+
+.hero {
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 24px;
+}
+
+.hero__text {
+  color: var(--muted);
+  max-width: 65ch;
+}
+
+.hero__actions,
+.panel__footer {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.hero__metrics {
+  display: grid;
+  gap: 14px;
+}
+
+.hero__metrics article,
+.workflow-card,
+.library-overview,
+.tree-toolbar,
+.file-tree__item,
+.job-card,
+.drive-card {
+  background: rgba(8, 16, 29, 0.72);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.hero__metrics article {
+  padding: 18px;
+}
+
+.hero__metrics strong,
+.library-overview strong {
+  display: block;
+  font-size: 1.8rem;
+  margin: 10px 0 4px;
+}
+
+.hero__metrics span,
+.library-overview span {
+  color: var(--muted);
+}
+
+.button {
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+.button--primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #032521;
+}
+
+.button--secondary,
+.button--ghost,
+.tabs__item {
+  background: rgba(15, 23, 42, 0.72);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.grid {
+  display: grid;
+  gap: 24px;
+}
+
+.grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid--three {
+  grid-template-columns: 1.4fr 1.4fr 1fr;
+}
+
+.panel {
+  padding: 22px;
+}
+
+.panel--span-2 {
+  grid-column: span 2;
+}
+
+.panel__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.status-pill,
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  border: 1px solid transparent;
+}
+
+.status-pill--success {
+  color: var(--success);
+  background: rgba(52, 211, 153, 0.12);
+}
+
+.status-pill--warning {
+  color: var(--warning);
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.status-pill--info,
+.pill {
+  color: var(--info);
+  background: rgba(96, 165, 250, 0.12);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.form-grid label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.form-grid__wide {
+  grid-column: span 2;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.85);
+  color: var(--text);
+  padding: 13px 14px;
+}
+
+.drive-list,
+.job-list,
+.file-tree {
+  display: grid;
+  gap: 12px;
+}
+
+.drive-card {
+  padding: 16px;
+}
+
+.drive-card__top,
+.job-card__top,
+.file-tree__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.progress {
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(148, 163, 184, 0.16);
+  margin-top: 12px;
+}
+
+.progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--info), var(--accent));
+}
+
+.tabs {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.tabs__item--active {
+  border-color: rgba(94, 234, 212, 0.3);
+  background: rgba(94, 234, 212, 0.1);
+}
+
+.workflow-card {
+  display: none;
+  padding: 18px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.workflow-card.active {
+  display: flex;
+}
+
+.workflow-card__content {
+  display: grid;
+  gap: 10px;
+}
+
+.check-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+.library-overview {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.slot {
+  padding: 14px 10px;
+  border-radius: 14px;
+  text-align: center;
+  border: 1px solid var(--border);
+  background: rgba(8, 16, 29, 0.72);
+}
+
+.slot strong,
+.slot span {
+  display: block;
+}
+
+.slot span {
+  color: var(--muted);
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+.slot--loaded {
+  border-color: rgba(94, 234, 212, 0.2);
+}
+
+.slot--reserved {
+  border-color: rgba(245, 158, 11, 0.24);
+}
+
+.tree-toolbar {
+  padding: 16px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.file-tree__item {
+  padding: 14px 16px;
+}
+
+.file-tree__item small,
+.job-card small {
+  color: var(--muted);
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkbox input {
+  width: 18px;
+  height: 18px;
+}
+
+.job-card {
+  padding: 16px;
+}
+
+.job-card__stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 1200px) {
+  .app-shell,
+  .hero,
+  .grid--two,
+  .grid--three,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel--span-2,
+  .form-grid__wide {
+    grid-column: auto;
+  }
+
+  .sidebar {
+    min-height: auto;
+  }
+
+  .library-overview,
+  .slot-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    padding: 16px;
+  }
+
+  .panel,
+  .hero,
+  .sidebar {
+    padding: 18px;
+  }
+
+  .workflow-card,
+  .panel__header,
+  .tree-toolbar,
+  .file-tree__item,
+  .job-card__top,
+  .drive-card__top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .library-overview,
+  .slot-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
